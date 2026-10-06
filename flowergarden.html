@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enchanted Exotic Flower Garden</title>
+
+  <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Georgia, serif;
+    }
+
+    #title {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      color: white;
+      text-align: center;
+      text-shadow: 0 0 15px #ff66cc, 0 0 30px #9b5cff;
+      pointer-events: none;
+    }
+
+    #title h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    #title p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="title">
+  <h1>🌺 Enchanted Exotic Garden 🌺</h1>
+  <p>Enter a world of extraordinary flowers</p>
+</div>
+
+<a-scene
+  background="color: #07151a"
+  fog="type: exponential; color: #102b27; density: 0.025"
+  renderer="colorManagement: true; physicallyCorrectLights: true"
+  vr-mode-ui="enabled: true"
+  cursor="rayOrigin: mouse">
+
+  <!-- =========================
+       ASSETS
+  ========================== -->
+
+  <a-assets>
+
+    <!-- Ground -->
+    <a-asset-item id="flowerModel"
+      src="">
+    </a-asset-item>
+
+    <!-- Soft glowing material -->
+    <a-mixin
+      id="glowPink"
+      material="color: #ff3cac; emissive: #ff168f; emissiveIntensity: 2; roughness: 0.3">
+    </a-mixin>
+
+    <a-mixin
+      id="glowPurple"
+      material="color: #a855f7; emissive: #7c3aed; emissiveIntensity: 2; roughness: 0.3">
+    </a-mixin>
+
+    <a-mixin
+      id="glowBlue"
+      material="color: #38bdf8; emissive: #0284c7; emissiveIntensity: 2; roughness: 0.3">
+    </a-mixin>
+
+    <a-mixin
+      id="glowGold"
+      material="color: #facc15; emissive: #f59e0b; emissiveIntensity: 2; roughness: 0.3">
+    </a-mixin>
+
+  </a-assets>
+
+
+  <!-- =========================
+       LIGHTING
+  ========================== -->
+
+  <a-light
+    type="ambient"
+    color="#9b7cff"
+    intensity="1.8">
+  </a-light>
+
+  <a-light
+    type="directional"
+    position="-5 10 5"
+    color="#fff0d0"
+    intensity="2">
+  </a-light>
+
+  <a-light
+    type="point"
+    position="0 4 -5"
+    color="#ff38c7"
+    intensity="5"
+    distance="15">
+  </a-light>
+
+  <a-light
+    type="point"
+    position="7 3 2"
+    color="#38bdf8"
+    intensity="4"
+    distance="12">
+  </a-light>
+
+
+  <!-- =========================
+       GROUND
+  ========================== -->
+
+  <a-cylinder
+    position="0 -0.25 0"
+    radius="18"
+    height="0.5"
+    color="#102f24"
+    material="roughness: 1">
+  </a-cylinder>
+
+  <a-circle
+    position="0 0.01 0"
+    rotation="-90 0 0"
+    radius="18"
+    color="#163d2d">
+  </a-circle>
+
+
+  <!-- =========================
+       MOON
+  ========================== -->
+
+  <a-sphere
+    position="-10 12 -15"
+    radius="3"
+    material="color:#fff8dc; emissive:#fff4b0; emissiveIntensity:2">
+  </a-sphere>
+
+
+  <!-- =========================
+       POND
+  ========================== -->
+
+  <a-cylinder
+    position="4 0.05 -5"
+    radius="3.5"
+    height="0.12"
+    color="#087e9f"
+    material="
+      opacity:0.75;
+      transparent:true;
+      metalness:0.4;
+      roughness:0.1;
+      emissive:#063d5c;
+      emissiveIntensity:0.8">
+  </a-cylinder>
+
+  <a-ring
+    position="4 0.12 -5"
+    rotation="-90 0 0"
+    radius-inner="3.45"
+    radius-outer="3.7"
+    color="#65e6ff">
+  </a-ring>
+
+
+  <!-- =========================
+       WATER LILIES
+  ========================== -->
+
+  <a-entity position="3 0.15 -5">
+    <a-circle rotation="-90 0 0" radius="0.5" color="#52b788"></a-circle>
+    <a-sphere position="0 0.08 0" radius="0.15" color="#ff72d2"
+      material="emissive:#ff20a8; emissiveIntensity:1.5"></a-sphere>
+  </a-entity>
+
+  <a-entity position="5.5 0.15 -5.5">
+    <a-circle rotation="-90 0 0" radius="0.45" color="#52b788"></a-circle>
+    <a-sphere position="0 0.08 0" radius="0.14" color="#ffe66d"
+      material="emissive:#ffcc00; emissiveIntensity:1.5"></a-sphere>
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER COMPONENT
+       ===================================================== -->
+
+  <a-entity id="garden">
+
+
+    <!-- =================================================
+         ORCHIDS
+    ================================================== -->
+
+    <a-entity position="-7 0 -5" rotation="0 25 0">
+
+      <a-cylinder position="0 1.4 0"
+        radius="0.06" height="2.8"
+        color="#237a42"></a-cylinder>
+
+      <a-sphere position="0 2.8 0"
+        radius="0.35"
+        color="#ff69d4"
+        material="emissive:#ff1493; emissiveIntensity:1.5"
+        animation="property:rotation; to:0 360 0; dur:7000; loop:true">
+      </a-sphere>
+
+      <a-sphere position="0.35 2.8 0"
+        radius="0.28"
+        color="#c084fc"></a-sphere>
+
+      <a-sphere position="-0.35 2.8 0"
+        radius="0.28"
+        color="#c084fc"></a-sphere>
+
+      <a-sphere position="0 2.8 0.35"
+        radius="0.28"
+        color="#f0abfc"></a-sphere>
+
+      <a-sphere position="0 2.8 -0.35"
+        radius="0.28"
+        color="#f0abfc"></a-sphere>
+
+      <a-sphere position="0 2.8 0"
+        radius="0.13"
+        color="#ffd166"
+        material="emissive:#ffb703; emissiveIntensity:2">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         BLACK ORCHIDS
+    ================================================== -->
+
+    <a-entity position="-5 0 -7">
+
+      <a-cylinder position="0 1.3 0"
+        radius="0.055"
+        height="2.6"
+        color="#22543d">
+      </a-cylinder>
+
+      <a-sphere position="0 2.6 0"
+        radius="0.34"
+        color="#32104f"
+        material="emissive:#8b1fc7; emissiveIntensity:1.3">
+      </a-sphere>
+
+      <a-sphere position="0.35 2.6 0"
+        radius="0.27"
+        color="#17051f">
+      </a-sphere>
+
+      <a-sphere position="-0.35 2.6 0"
+        radius="0.27"
+        color="#17051f">
+      </a-sphere>
+
+      <a-sphere position="0 2.6 0.35"
+        radius="0.27"
+        color="#17051f">
+      </a-sphere>
+
+      <a-sphere position="0 2.6 -0.35"
+        radius="0.27"
+        color="#17051f">
+      </a-sphere>
+
+      <a-sphere position="0 2.6 0"
+        radius="0.12"
+        color="#ffd166"
+        material="emissive:#ffae00; emissiveIntensity:2">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         GIANT LOTUS
+    ================================================== -->
+
+    <a-entity position="0 0 -9">
+
+      <a-cylinder
+        position="0 1 0"
+        radius="0.07"
+        height="2"
+        color="#26734d">
+      </a-cylinder>
+
+      <!-- petals -->
+      <a-sphere
+        position="0 2.15 0"
+        scale="0.65 0.25 1"
+        color="#ff4fa3"
+        material="emissive:#ff168f; emissiveIntensity:1.3">
+      </a-sphere>
+
+      <a-sphere
+        position="0.55 2.15 0"
+        rotation="0 0 25"
+        scale="0.65 0.25 1"
+        color="#ff78bd">
+      </a-sphere>
+
+      <a-sphere
+        position="-0.55 2.15 0"
+        rotation="0 0 -25"
+        scale="0.65 0.25 1"
+        color="#ff78bd">
+      </a-sphere>
+
+      <a-sphere
+        position="0 2.15 0.55"
+        rotation="25 0 0"
+        scale="0.65 0.25 1"
+        color="#ff91c7">
+      </a-sphere>
+
+      <a-sphere
+        position="0 2.15 -0.55"
+        rotation="-25 0 0"
+        scale="0.65 0.25 1"
+        color="#ff91c7">
+      </a-sphere>
+
+      <a-sphere
+        position="0 2.35 0"
+        radius="0.3"
+        color="#ffd166"
+        material="emissive:#ffb300; emissiveIntensity:2">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         BLUE POPPIES
+    ================================================== -->
+
+    <a-entity position="6 0 -8">
+
+      <a-cylinder position="0 1.2 0"
+        radius="0.045"
+        height="2.4"
+        color="#27734d">
+      </a-cylinder>
+
+      <a-sphere position="0 2.4 0"
+        radius="0.4"
+        color="#38bdf8"
+        material="emissive:#0284c7; emissiveIntensity:1.8">
+      </a-sphere>
+
+      <a-sphere position="0.4 2.4 0"
+        radius="0.3"
+        color="#60a5fa">
+      </a-sphere>
+
+      <a-sphere position="-0.4 2.4 0"
+        radius="0.3"
+        color="#60a5fa">
+      </a-sphere>
+
+      <a-sphere position="0 2.4 0.4"
+        radius="0.3"
+        color="#93c5fd">
+      </a-sphere>
+
+      <a-sphere position="0 2.4 -0.4"
+        radius="0.3"
+        color="#93c5fd">
+      </a-sphere>
+
+      <a-sphere position="0 2.4 0"
+        radius="0.12"
+        color="#facc15">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         RAINBOW FLOWERS
+    ================================================== -->
+
+    <a-entity position="8 0 -3">
+
+      <a-cylinder
+        position="0 1.3 0"
+        radius="0.05"
+        height="2.6"
+        color="#287a45">
+      </a-cylinder>
+
+      <a-sphere position="0 2.65 0"
+        radius="0.35"
+        color="#ff2d55"
+        material="emissive:#ff0033; emissiveIntensity:1.2">
+      </a-sphere>
+
+      <a-sphere position="0.35 2.65 0"
+        radius="0.3"
+        color="#ff9f1c">
+      </a-sphere>
+
+      <a-sphere position="-0.35 2.65 0"
+        radius="0.3"
+        color="#ffe66d">
+      </a-sphere>
+
+      <a-sphere position="0 2.65 0.35"
+        radius="0.3"
+        color="#2ec4b6">
+      </a-sphere>
+
+      <a-sphere position="0 2.65 -0.35"
+        radius="0.3"
+        color="#9b5de5">
+      </a-sphere>
+
+      <a-sphere position="0 2.65 0"
+        radius="0.13"
+        color="#fff">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         GLOWING NIGHT FLOWERS
+    ================================================== -->
+
+    <a-entity position="-8 0 1">
+
+      <a-cylinder
+        position="0 1.3 0"
+        radius="0.05"
+        height="2.6"
+        color="#23633b">
+      </a-cylinder>
+
+      <a-sphere
+        position="0 2.6 0"
+        radius="0.45"
+        color="#d946ef"
+        material="
+          emissive:#d946ef;
+          emissiveIntensity:3;
+          transparent:true;
+          opacity:0.9">
+        <a-animation
+          attribute="scale"
+          from="0.8 0.8 0.8"
+          to="1.2 1.2 1.2"
+          dur="1800"
+          direction="alternate"
+          repeat="indefinite">
+        </a-animation>
+      </a-sphere>
+
+      <a-sphere
+        position="0 2.6 0"
+        radius="0.12"
+        color="#fff7ad"
+        material="emissive:#fff000; emissiveIntensity:4">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         GOLDEN FLOWERS
+    ================================================== -->
+
+    <a-entity position="5 0 2">
+
+      <a-cylinder
+        position="0 1.5 0"
+        radius="0.06"
+        height="3"
+        color="#317a42">
+      </a-cylinder>
+
+      <a-sphere position="0 3 0"
+        radius="0.42"
+        color="#ffd166"
+        material="emissive:#ff9f00; emissiveIntensity:2">
+      </a-sphere>
+
+      <a-sphere position="0.4 3 0"
+        radius="0.3"
+        color="#ffea70">
+      </a-sphere>
+
+      <a-sphere position="-0.4 3 0"
+        radius="0.3"
+        color="#ffea70">
+      </a-sphere>
+
+      <a-sphere position="0 3 0.4"
+        radius="0.3"
+        color="#ffe066">
+      </a-sphere>
+
+      <a-sphere position="0 3 -0.4"
+        radius="0.3"
+        color="#ffe066">
+      </a-sphere>
+
+    </a-entity>
+
+
+    <!-- =================================================
+         SMALL FLOWER FIELD
+    ================================================== -->
+
+    <a-entity position="-3 0 -3">
+      <a-cylinder position="0 0.7 0" radius="0.035" height="1.4" color="#32844d"></a-cylinder>
+      <a-sphere position="0 1.45 0" radius="0.25" color="#ff4d8d"></a-sphere>
+    </a-entity>
+
+    <a-entity position="-2 0 -3.5">
+      <a-cylinder position="0 0.65 0" radius="0.035" height="1.3" color="#32844d"></a-cylinder>
+      <a-sphere position="0 1.35 0" radius="0.23" color="#9b5de5"></a-sphere>
+    </a-entity>
+
+    <a-entity position="-4 0 -3">
+      <a-cylinder position="0 0.75 0" radius="0.035" height="1.5" color="#32844d"></a-cylinder>
+      <a-sphere position="0 1.55 0" radius="0.25" color="#38bdf8"></a-sphere>
+    </a-entity>
+
+
+    <!-- =========================
+         TREES
+    ========================== -->
+
+    <a-entity position="-11 0 -4">
+      <a-cylinder
+        position="0 2 0"
+        radius="0.45"
+        height="4"
+        color="#50351f">
+      </a-cylinder>
+
+      <a-sphere
+        position="0 4.5 0"
+        radius="2.2"
+        color="#174d32">
+      </a-sphere>
+
+      <a-sphere
+        position="-1.5 4.2 0"
+        radius="1.4"
+        color="#1d633c">
+      </a-sphere>
+
+      <a-sphere
+        position="1.5 4.1 0"
+        radius="1.5"
+        color="#155c38">
+      </a-sphere>
+    </a-entity>
+
+
+    <a-entity position="11 0 -7">
+      <a-cylinder
+        position="0 2 0"
+        radius="0.5"
+        height="4"
+        color="#543a24">
+      </a-cylinder>
+
+      <a-sphere
+        position="0 4.6 0"
+        radius="2.5"
+        color="#164e32">
+      </a-sphere>
+
+      <a-sphere
+        position="-1.5 4.4 0"
+        radius="1.5"
+        color="#1c633b">
+      </a-sphere>
+
+      <a-sphere
+        position="1.4 4.3 0"
+        radius="1.5"
+        color="#14532d">
+      </a-sphere>
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- =========================
+       FIREFLIES
+  ========================== -->
+
+  <a-entity id="fireflies">
+
+    <a-sphere position="-5 3 -4"
+      radius="0.06"
+      color="#ffff66"
+      material="emissive:#ffff00; emissiveIntensity:5"
+      animation="property:position; to:-4 4 -5; dur:3000; direction:alternate; loop:true">
+    </a-sphere>
+
+    <a-sphere position="-2 4 -6"
+      radius="0.05"
+      color="#b7ff5c"
+      material="emissive:#aaff00; emissiveIntensity:5"
+      animation="property:position; to:-1 3 -5; dur:2500; direction:alternate; loop:true">
+    </a-sphere>
+
+    <a-sphere position="7 3 -3"
+      radius="0.06"
+      color="#ffff66"
+      material="emissive:#ffff00; emissiveIntensity:5"
+      animation="property:position; to:8 4 -4; dur:2800; direction:alternate; loop:true">
+    </a-sphere>
+
+    <a-sphere position="3 3 0"
+      radius="0.05"
+      color="#baff70"
+      material="emissive:#baff00; emissiveIntensity:5"
+      animation="property:position; to:4 4 1; dur:2200; direction:alternate; loop:true">
+    </a-sphere>
+
+    <a-sphere position="-7 2 3"
+      radius="0.06"
+      color="#ffff66"
+      material="emissive:#ffff00; emissiveIntensity:5"
+      animation="property:position; to:-6 3 2; dur:3200; direction:alternate; loop:true">
+    </a-sphere>
+
+    <a-sphere position="9 4 1"
+      radius="0.05"
+      color="#b7ff5c"
+      material="emissive:#aaff00; emissiveIntensity:5"
+      animation="property:position; to:8 3 2; dur:2700; direction:alternate; loop:true">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =========================
+       BUTTERFLIES
+  ========================== -->
+
+  <a-entity position="-3 3 -4"
+    animation="property:position; to:3 4 -5; dur:9000; direction:alternate; loop:true">
+
+    <a-sphere
+      position="-0.18 0 0"
+      scale="0.35 0.05 0.5"
+      color="#ff66cc"
+      material="emissive:#ff1493; emissiveIntensity:1">
+    </a-sphere>
+
+    <a-sphere
+      position="0.18 0 0"
+      scale="0.35 0.05 0.5"
+      color="#c084fc"
+      material="emissive:#9333ea; emissiveIntensity:1">
+    </a-sphere>
+
+    <a-sphere
+      position="0 0 0"
+      scale="0.06 0.06 0.3"
+      color="#24120b">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <a-entity position="6 4 -2"
+    animation="property:position; to:-1 3 -6; dur:11000; direction:alternate; loop:true">
+
+    <a-sphere
+      position="-0.18 0 0"
+      scale="0.3 0.05 0.45"
+      color="#38bdf8">
+    </a-sphere>
+
+    <a-sphere
+      position="0.18 0 0"
+      scale="0.3 0.05 0.45"
+      color="#818cf8">
+    </a-sphere>
+
+    <a-sphere
+      position="0 0 0"
+      scale="0.05 0.05 0.25"
+      color="#24120b">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =========================
+       FLOATING MAGIC PARTICLES
+  ========================== -->
+
+  <a-entity>
+
+    <a-sphere position="-4 5 -8" radius="0.03"
+      color="#ff7ad9"
+      material="emissive:#ff1493; emissiveIntensity:4">
+    </a-sphere>
+
+    <a-sphere position="2 5 -9" radius="0.04"
+      color="#7dd3fc"
+      material="emissive:#38bdf8; emissiveIntensity:4">
+    </a-sphere>
+
+    <a-sphere position="7 5 -7" radius="0.03"
+      color="#fde68a"
+      material="emissive:#facc15; emissiveIntensity:4">
+    </a-sphere>
+
+    <a-sphere position="-8 4 -8" radius="0.04"
+      color="#d8b4fe"
+      material="emissive:#a855f7; emissiveIntensity:4">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =========================
+       STONE PATH
+  ========================== -->
+
+  <a-entity>
+
+    <a-cylinder position="0 0.12 2"
+      radius="0.7"
+      height="0.18"
+      color="#8b8b83"
+      rotation="0 0 0">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 0.5"
+      radius="0.65"
+      height="0.18"
+      color="#9b9b91">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 -1"
+      radius="0.6"
+      height="0.18"
+      color="#77776f">
+    </a-cylinder>
+
+  </a-entity>
+
+
+  <!-- =========================
+       CAMERA
+  ========================== -->
+
+  <a-entity
+    id="rig"
+    position="0 1.7 8"
+    animation="
+      property:rotation;
+      to:0 360 0;
+      dur:45000;
+      easing:linear;
+      loop:true">
+
+    <a-camera
+      wasd-controls="acceleration:20"
+      look-controls="enabled:true">
+    </a-camera>
+
+  </a-entity>
+
+
+  <!-- =========================
+       STARS
+  ========================== -->
+
+  <a-entity>
+
+    <a-sphere position="-9 8 -12" radius="0.025"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere position="-4 10 -14" radius="0.02"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere position="1 9 -15" radius="0.025"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere position="7 10 -13" radius="0.02"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere position="12 8 -10" radius="0.025"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =========================
+       AUDIO
+  ========================== -->
+
+  <!-- Add your own ambient audio file here if desired.
+  <a-sound
+    src="url(your-audio-file.mp3)"
+    autoplay="true"
+    loop="true"
+    volume="0.5">
+  </a-sound>
+  -->
+
+</a-scene>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>🌺 Exotic Moonlight Flower Garden</title>
+
+  <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #02030b;
+      font-family: Georgia, serif;
+    }
+
+    #title {
+      position: fixed;
+      z-index: 20;
+      top: 18px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      pointer-events: none;
+      text-shadow:
+        0 0 8px #ff7de9,
+        0 0 20px #a855f7,
+        0 0 40px #38bdf8;
+    }
+
+    #title h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: 2px;
+    }
+
+    #title p {
+      margin: 6px;
+      color: #e9d5ff;
+    }
+  </style>
+
+  <script>
+
+    /* ===============================
+       FLOWER COMPONENT
+    =============================== */
+
+    AFRAME.registerComponent('flower-sway', {
+      schema: {
+        speed: {type: 'number', default: 2500},
+        amount: {type: 'number', default: 7}
+      },
+
+      init: function () {
+        this.startRotation = this.el.getAttribute('rotation');
+      },
+
+      tick: function (time) {
+        const r = this.startRotation || {x:0,y:0,z:0};
+
+        this.el.setAttribute('rotation', {
+          x: r.x + Math.sin(time / this.data.speed) * this.data.amount,
+          y: r.y,
+          z: r.z + Math.cos(time / this.data.speed) * this.data.amount
+        });
+      }
+    });
+
+
+    /* ===============================
+       TWINKLING STAR
+    =============================== */
+
+    AFRAME.registerComponent('twinkle', {
+      schema: {
+        speed: {type: 'number', default: 1500}
+      },
+
+      tick: function(time) {
+
+        const glow =
+          2.5 +
+          Math.sin(time / this.data.speed) * 2.5;
+
+        this.el.setAttribute(
+          'material',
+          'emissiveIntensity',
+          Math.max(0.2, glow)
+        );
+
+        const scale =
+          0.65 +
+          (Math.sin(time / this.data.speed) + 1) * 0.25;
+
+        this.el.object3D.scale.set(scale, scale, scale);
+      }
+    });
+
+
+    /* ===============================
+       BUTTERFLY WING FLAP
+    =============================== */
+
+    AFRAME.registerComponent('wing-flap', {
+      tick: function(time) {
+
+        const angle = Math.sin(time / 100) * 35;
+
+        const left = this.el.querySelector('.leftWing');
+        const right = this.el.querySelector('.rightWing');
+
+        if (left) {
+          left.setAttribute('rotation', `0 0 ${angle}`);
+        }
+
+        if (right) {
+          right.setAttribute('rotation', `0 0 ${-angle}`);
+        }
+      }
+    });
+
+  </script>
+</head>
+
+
+<body>
+
+<div id="title">
+  <h1>🌺 Enchanted Exotic Flower Garden 🌺</h1>
+  <p>✨ A garden beneath the stars ✨</p>
+</div>
+
+
+<a-scene
+  background="color:#02030b"
+  fog="type:exponential; color:#071426; density:0.018"
+  renderer="colorManagement:true; physicallyCorrectLights:true"
+  vr-mode-ui="enabled:true"
+  cursor="rayOrigin:mouse">
+
+
+  <!-- =====================================================
+       NIGHT SKY
+  ====================================================== -->
+
+  <a-sphere
+    position="0 0 0"
+    radius="70"
+    material="
+      color:#030616;
+      side:back;
+      shader:flat">
+  </a-sphere>
+
+
+  <!-- =====================================================
+       MOON
+  ====================================================== -->
+
+  <a-sphere
+    position="-12 14 -25"
+    radius="3"
+    material="
+      color:#fffbe6;
+      emissive:#fff2a8;
+      emissiveIntensity:2">
+  </a-sphere>
+
+  <a-light
+    type="point"
+    position="-12 14 -20"
+    color="#b9c7ff"
+    intensity="3"
+    distance="40">
+  </a-light>
+
+
+  <!-- =====================================================
+       LIGHTING
+  ====================================================== -->
+
+  <a-light
+    type="ambient"
+    color="#7187d8"
+    intensity="1.4">
+  </a-light>
+
+  <a-light
+    type="directional"
+    position="-5 12 4"
+    color="#d9dcff"
+    intensity="1.5">
+  </a-light>
+
+  <a-light
+    type="point"
+    position="0 4 -5"
+    color="#ff37c7"
+    intensity="4"
+    distance="15">
+  </a-light>
+
+  <a-light
+    type="point"
+    position="8 3 -4"
+    color="#39d9ff"
+    intensity="4"
+    distance="15">
+  </a-light>
+
+
+  <!-- =====================================================
+       TWINKLING STARS
+  ====================================================== -->
+
+  <a-entity id="stars">
+
+    <!-- Star 1 -->
+    <a-sphere class="star"
+      position="-18 14 -30"
+      radius="0.09"
+      color="#ffffff"
+      material="emissive:#ffffff; emissiveIntensity:3"
+      twinkle="speed:900">
+    </a-sphere>
+
+    <a-sphere
+      position="-14 10 -27"
+      radius="0.06"
+      color="#ffe9ff"
+      material="emissive:#ffb8ff; emissiveIntensity:3"
+      twinkle="speed:1300">
+    </a-sphere>
+
+    <a-sphere
+      position="-9 16 -32"
+      radius="0.08"
+      color="#ffffff"
+      material="emissive:#ffffff; emissiveIntensity:3"
+      twinkle="speed:700">
+    </a-sphere>
+
+    <a-sphere
+      position="-4 13 -29"
+      radius="0.07"
+      color="#b9eaff"
+      material="emissive:#38bdf8; emissiveIntensity:3"
+      twinkle="speed:1700">
+    </a-sphere>
+
+    <a-sphere
+      position="2 17 -32"
+      radius="0.09"
+      color="#ffffff"
+      material="emissive:#ffffff; emissiveIntensity:3"
+      twinkle="speed:1100">
+    </a-sphere>
+
+    <a-sphere
+      position="8 13 -29"
+      radius="0.06"
+      color="#ffd6fa"
+      material="emissive:#ff69d4; emissiveIntensity:3"
+      twinkle="speed:800">
+    </a-sphere>
+
+    <a-sphere
+      position="14 16 -30"
+      radius="0.08"
+      color="#ffffff"
+      material="emissive:#ffffff; emissiveIntensity:3"
+      twinkle="speed:1500">
+    </a-sphere>
+
+    <a-sphere
+      position="18 11 -27"
+      radius="0.07"
+      color="#c8e8ff"
+      material="emissive:#60a5fa; emissiveIntensity:3"
+      twinkle="speed:950">
+    </a-sphere>
+
+    <a-sphere
+      position="-20 7 -24"
+      radius="0.06"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3"
+      twinkle="speed:1250">
+    </a-sphere>
+
+    <a-sphere
+      position="-12 6 -25"
+      radius="0.05"
+      color="#ffe66d"
+      material="emissive:#ffe66d; emissiveIntensity:3"
+      twinkle="speed:600">
+    </a-sphere>
+
+    <a-sphere
+      position="-6 8 -26"
+      radius="0.08"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3"
+      twinkle="speed:1800">
+    </a-sphere>
+
+    <a-sphere
+      position="0 11 -28"
+      radius="0.05"
+      color="#b7f7ff"
+      material="emissive:#38bdf8; emissiveIntensity:3"
+      twinkle="speed:750">
+    </a-sphere>
+
+    <a-sphere
+      position="6 7 -26"
+      radius="0.07"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3"
+      twinkle="speed:1050">
+    </a-sphere>
+
+    <a-sphere
+      position="12 9 -28"
+      radius="0.06"
+      color="#ffd6ff"
+      material="emissive:#f0abfc; emissiveIntensity:3"
+      twinkle="speed:1400">
+    </a-sphere>
+
+    <a-sphere
+      position="19 15 -31"
+      radius="0.09"
+      color="#fff"
+      material="emissive:#fff; emissiveIntensity:3"
+      twinkle="speed:850">
+    </a-sphere>
+
+    <a-sphere
+      position="21 9 -23"
+      radius="0.05"
+      color="#ffe680"
+      material="emissive:#ffe680; emissiveIntensity:3"
+      twinkle="speed:1200">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       GROUND
+  ====================================================== -->
+
+  <a-cylinder
+    position="0 -0.3 0"
+    radius="20"
+    height="0.6"
+    color="#102f24">
+  </a-cylinder>
+
+  <a-circle
+    position="0 0.02 0"
+    rotation="-90 0 0"
+    radius="20"
+    color="#123a29">
+  </a-circle>
+
+
+  <!-- =====================================================
+       CENTRAL STONE PATH
+  ====================================================== -->
+
+  <a-entity id="path">
+
+    <a-cylinder position="0 0.12 6"
+      radius="0.75"
+      height="0.2"
+      color="#8b8b86">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 4.5"
+      radius="0.7"
+      height="0.2"
+      color="#9d9d95">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 3"
+      radius="0.68"
+      height="0.2"
+      color="#77776f">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 1.5"
+      radius="0.65"
+      height="0.2"
+      color="#a0a098">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 0"
+      radius="0.62"
+      height="0.2"
+      color="#85857d">
+    </a-cylinder>
+
+    <a-cylinder position="0 0.12 -1.5"
+      radius="0.65"
+      height="0.2"
+      color="#9a9a92">
+    </a-cylinder>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 1 — GIANT ORCHID
+  ====================================================== -->
+
+  <a-entity position="-8 0 -5" flower-sway="speed:2800;amount:5">
+
+    <a-cylinder
+      position="0 1.5 0"
+      radius="0.07"
+      height="3"
+      color="#236b3c">
+    </a-cylinder>
+
+    <a-sphere position="0 3.05 0"
+      radius="0.38"
+      color="#ff4db8"
+      material="emissive:#ff1493;emissiveIntensity:1.5">
+    </a-sphere>
+
+    <a-sphere position="0.4 3.05 0"
+      radius="0.3"
+      color="#d946ef">
+    </a-sphere>
+
+    <a-sphere position="-0.4 3.05 0"
+      radius="0.3"
+      color="#c084fc">
+    </a-sphere>
+
+    <a-sphere position="0 3.05 0.4"
+      radius="0.3"
+      color="#f0abfc">
+    </a-sphere>
+
+    <a-sphere position="0 3.05 -0.4"
+      radius="0.3"
+      color="#f0abfc">
+    </a-sphere>
+
+    <a-sphere position="0 3.05 0"
+      radius="0.13"
+      color="#ffd166"
+      material="emissive:#ffb300;emissiveIntensity:2">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 2 — BLUE POPPY
+  ====================================================== -->
+
+  <a-entity position="-5 0 -6" flower-sway="speed:3200;amount:4">
+
+    <a-cylinder
+      position="0 1.3 0"
+      radius="0.05"
+      height="2.6"
+      color="#287a48">
+    </a-cylinder>
+
+    <a-sphere position="0 2.65 0"
+      radius="0.42"
+      color="#38bdf8"
+      material="emissive:#0284c7;emissiveIntensity:1.7">
+    </a-sphere>
+
+    <a-sphere position="0.4 2.65 0"
+      radius="0.3"
+      color="#60a5fa">
+    </a-sphere>
+
+    <a-sphere position="-0.4 2.65 0"
+      radius="0.3"
+      color="#60a5fa">
+    </a-sphere>
+
+    <a-sphere position="0 2.65 0.4"
+      radius="0.3"
+      color="#93c5fd">
+    </a-sphere>
+
+    <a-sphere position="0 2.65 -0.4"
+      radius="0.3"
+      color="#93c5fd">
+    </a-sphere>
+
+    <a-sphere position="0 2.65 0"
+      radius="0.12"
+      color="#ffd166">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 3 — PURPLE PASSION FLOWER
+  ====================================================== -->
+
+  <a-entity position="5 0 -7" flower-sway="speed:2400;amount:6">
+
+    <a-cylinder
+      position="0 1.4 0"
+      radius="0.055"
+      height="2.8"
+      color="#216b3c">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 2.8 0"
+      radius="0.48"
+      color="#7c3aed"
+      material="emissive:#6d28d9;emissiveIntensity:1.5">
+    </a-sphere>
+
+    <a-sphere
+      position="0.45 2.8 0"
+      radius="0.25"
+      color="#e879f9">
+    </a-sphere>
+
+    <a-sphere
+      position="-0.45 2.8 0"
+      radius="0.25"
+      color="#e879f9">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 0.45"
+      radius="0.25"
+      color="#f0abfc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 -0.45"
+      radius="0.25"
+      color="#f0abfc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 0"
+      radius="0.15"
+      color="#ffe066"
+      material="emissive:#ffd000;emissiveIntensity:2">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 4 — GOLDEN LOTUS
+  ====================================================== -->
+
+  <a-entity position="0 0 -9" flower-sway="speed:3500;amount:3">
+
+    <a-cylinder
+      position="0 1 0"
+      radius="0.07"
+      height="2"
+      color="#287a45">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 2.2 0"
+      scale="0.7 0.28 1"
+      color="#ffd166"
+      material="emissive:#ffb000;emissiveIntensity:1.8">
+    </a-sphere>
+
+    <a-sphere
+      position="0.55 2.2 0"
+      scale="0.6 0.25 0.9"
+      color="#ffea70">
+    </a-sphere>
+
+    <a-sphere
+      position="-0.55 2.2 0"
+      scale="0.6 0.25 0.9"
+      color="#ffea70">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.2 0.55"
+      scale="0.6 0.25 0.9"
+      color="#ffe066">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.2 -0.55"
+      scale="0.6 0.25 0.9"
+      color="#ffe066">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.35 0"
+      radius="0.25"
+      color="#ff8c00"
+      material="emissive:#ff7000;emissiveIntensity:2">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 5 — MAGENTA GLOW FLOWER
+  ====================================================== -->
+
+  <a-entity position="8 0 -2" flower-sway="speed:2100;amount:8">
+
+    <a-cylinder
+      position="0 1.4 0"
+      radius="0.05"
+      height="2.8"
+      color="#277044">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 2.8 0"
+      radius="0.48"
+      color="#ec4899"
+      material="
+        emissive:#ec4899;
+        emissiveIntensity:3">
+      <a-animation
+        attribute="scale"
+        from="0.85 0.85 0.85"
+        to="1.15 1.15 1.15"
+        dur="1800"
+        direction="alternate"
+        repeat="indefinite">
+      </a-animation>
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 0"
+      radius="0.14"
+      color="#fff7ad"
+      material="emissive:#fff000;emissiveIntensity:4">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 6 — NEON CYAN FLOWER
+  ====================================================== -->
+
+  <a-entity position="9 0 -7" flower-sway="speed:2600;amount:5">
+
+    <a-cylinder
+      position="0 1.5 0"
+      radius="0.055"
+      height="3"
+      color="#267044">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 3 0"
+      radius="0.4"
+      color="#22d3ee"
+      material="emissive:#06b6d4;emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere
+      position="0.42 3 0"
+      radius="0.28"
+      color="#67e8f9">
+    </a-sphere>
+
+    <a-sphere
+      position="-0.42 3 0"
+      radius="0.28"
+      color="#67e8f9">
+    </a-sphere>
+
+    <a-sphere
+      position="0 3 0.42"
+      radius="0.28"
+      color="#a5f3fc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 3 -0.42"
+      radius="0.28"
+      color="#a5f3fc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 3 0"
+      radius="0.1"
+      color="#ffffff"
+      material="emissive:#ffffff;emissiveIntensity:4">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 7 — BLACK/PURPLE ORCHID
+  ====================================================== -->
+
+  <a-entity position="-9 0 -8" flower-sway="speed:3000;amount:5">
+
+    <a-cylinder
+      position="0 1.5 0"
+      radius="0.06"
+      height="3"
+      color="#22543d">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 3 0"
+      radius="0.4"
+      color="#21062e"
+      material="emissive:#7e22ce;emissiveIntensity:2">
+    </a-sphere>
+
+    <a-sphere position="0.4 3 0"
+      radius="0.29"
+      color="#31063f">
+    </a-sphere>
+
+    <a-sphere position="-0.4 3 0"
+      radius="0.29"
+      color="#31063f">
+    </a-sphere>
+
+    <a-sphere position="0 3 0.4"
+      radius="0.29"
+      color="#4c0b63">
+    </a-sphere>
+
+    <a-sphere position="0 3 -0.4"
+      radius="0.29"
+      color="#4c0b63">
+    </a-sphere>
+
+    <a-sphere
+      position="0 3 0"
+      radius="0.11"
+      color="#ffd166"
+      material="emissive:#ffb000;emissiveIntensity:3">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 8 — RAINBOW FLOWER
+  ====================================================== -->
+
+  <a-entity position="-3 0 -4" flower-sway="speed:1900;amount:6">
+
+    <a-cylinder
+      position="0 1.2 0"
+      radius="0.04"
+      height="2.4"
+      color="#347a49">
+    </a-cylinder>
+
+    <a-sphere position="0 2.45 0"
+      radius="0.32"
+      color="#ff3158">
+    </a-sphere>
+
+    <a-sphere position="0.38 2.45 0"
+      radius="0.27"
+      color="#ff9f1c">
+    </a-sphere>
+
+    <a-sphere position="-0.38 2.45 0"
+      radius="0.27"
+      color="#ffe66d">
+    </a-sphere>
+
+    <a-sphere position="0 2.45 0.38"
+      radius="0.27"
+      color="#2ec4b6">
+    </a-sphere>
+
+    <a-sphere position="0 2.45 -0.38"
+      radius="0.27"
+      color="#9b5de5">
+    </a-sphere>
+
+    <a-sphere position="0 2.45 0"
+      radius="0.1"
+      color="#ffffff"
+      material="emissive:#fff;emissiveIntensity:3">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 9 — PINK STAR FLOWER
+  ====================================================== -->
+
+  <a-entity position="4 0 1" flower-sway="speed:2700;amount:5">
+
+    <a-cylinder
+      position="0 1.2 0"
+      radius="0.045"
+      height="2.4"
+      color="#2c7544">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 2.45 0"
+      scale="1 0.18 0.35"
+      color="#ff66b3"
+      material="emissive:#ff1493;emissiveIntensity:1.5">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.45 0"
+      rotation="0 72 0"
+      scale="1 0.18 0.35"
+      color="#ff8acb">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.45 0"
+      rotation="0 144 0"
+      scale="1 0.18 0.35"
+      color="#ffb0dc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.45 0"
+      rotation="0 216 0"
+      scale="1 0.18 0.35"
+      color="#ff66b3">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.45 0"
+      rotation="0 288 0"
+      scale="1 0.18 0.35"
+      color="#f0abfc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.5 0"
+      radius="0.12"
+      color="#ffe066"
+      material="emissive:#ffd000;emissiveIntensity:3">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 10 — ELECTRIC PURPLE
+  ====================================================== -->
+
+  <a-entity position="-5 0 1" flower-sway="speed:2300;amount:7">
+
+    <a-cylinder
+      position="0 1.3 0"
+      radius="0.05"
+      height="2.6"
+      color="#287044">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 2.65 0"
+      radius="0.45"
+      color="#a855f7"
+      material="emissive:#9333ea;emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere
+      position="0.42 2.65 0"
+      radius="0.26"
+      color="#d8b4fe">
+    </a-sphere>
+
+    <a-sphere
+      position="-0.42 2.65 0"
+      radius="0.26"
+      color="#d8b4fe">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.65 0.42"
+      radius="0.26"
+      color="#c084fc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.65 -0.42"
+      radius="0.26"
+      color="#c084fc">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.65 0"
+      radius="0.1"
+      color="#fff"
+      material="emissive:#fff;emissiveIntensity:4">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 11 — ORANGE EXOTIC FLOWER
+  ====================================================== -->
+
+  <a-entity position="7 0 2" flower-sway="speed:2500;amount:5">
+
+    <a-cylinder
+      position="0 1.5 0"
+      radius="0.055"
+      height="3"
+      color="#367c45">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 3 0"
+      radius="0.45"
+      color="#ff6b35"
+      material="emissive:#ff4500;emissiveIntensity:2">
+    </a-sphere>
+
+    <a-sphere position="0.4 3 0"
+      radius="0.3"
+      color="#ff9f1c">
+    </a-sphere>
+
+    <a-sphere position="-0.4 3 0"
+      radius="0.3"
+      color="#ff9f1c">
+    </a-sphere>
+
+    <a-sphere position="0 3 0.4"
+      radius="0.3"
+      color="#ffd166">
+    </a-sphere>
+
+    <a-sphere position="0 3 -0.4"
+      radius="0.3"
+      color="#ffd166">
+    </a-sphere>
+
+    <a-sphere
+      position="0 3 0"
+      radius="0.11"
+      color="#fff"
+      material="emissive:#fff;emissiveIntensity:3">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER 12 — GLOWING WHITE FLOWER
+  ====================================================== -->
+
+  <a-entity position="-7 0 2" flower-sway="speed:3100;amount:4">
+
+    <a-cylinder
+      position="0 1.4 0"
+      radius="0.05"
+      height="2.8"
+      color="#347a49">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 2.8 0"
+      radius="0.48"
+      color="#ffffff"
+      material="
+        color:#ffffff;
+        emissive:#dff8ff;
+        emissiveIntensity:3">
+    </a-sphere>
+
+    <a-sphere
+      position="0.4 2.8 0"
+      radius="0.3"
+      color="#e0f7ff">
+    </a-sphere>
+
+    <a-sphere
+      position="-0.4 2.8 0"
+      radius="0.3"
+      color="#e0f7ff">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 0.4"
+      radius="0.3"
+      color="#ffffff">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 -0.4"
+      radius="0.3"
+      color="#ffffff">
+    </a-sphere>
+
+    <a-sphere
+      position="0 2.8 0"
+      radius="0.1"
+      color="#fff0a8"
+      material="emissive:#ffe600;emissiveIntensity:4">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       FLOWER BED — MANY SMALL FLOWERS
+  ====================================================== -->
+
+  <a-entity id="flower-field">
+
+    <!-- Pink -->
+    <a-sphere position="-11 1 -1" radius="0.22" color="#ff4fa3"
+      material="emissive:#ff1493;emissiveIntensity:1.5"></a-sphere>
+
+    <a-sphere position="-10 1.2 -2" radius="0.25" color="#ff8acb"></a-sphere>
+
+    <a-sphere position="-12 1.1 -3" radius="0.2" color="#ec4899"></a-sphere>
+
+    <!-- Purple -->
+    <a-sphere position="-10 1.3 0" radius="0.25" color="#a855f7"
+      material="emissive:#9333ea;emissiveIntensity:1.5"></a-sphere>
+
+    <a-sphere position="-12 1.2 1" radius="0.23" color="#c084fc"></a-sphere>
+
+    <!-- Blue -->
+    <a-sphere position="10 1.1 0" radius="0.25" color="#38bdf8"
+      material="emissive:#0284c7;emissiveIntensity:1.5"></a-sphere>
+
+    <a-sphere position="11 1.2 1" radius="0.22" color="#60a5fa"></a-sphere>
+
+    <a-sphere position="10 1.1 3" radius="0.24" color="#67e8f9"></a-sphere>
+
+    <!-- Yellow -->
+    <a-sphere position="2 1.1 4" radius="0.25" color="#ffd166"
+      material="emissive:#ffb000;emissiveIntensity:1.5"></a-sphere>
+
+    <a-sphere position="3 1.2 5" radius="0.22" color="#ffe66d"></a-sphere>
+
+    <a-sphere position="-2 1.1 4" radius="0.24" color="#facc15"></a-sphere>
+
+    <!-- White -->
+    <a-sphere position="-3 1.2 5" radius="0.22" color="#fff"
+      material="emissive:#dff8ff;emissiveIntensity:1.5"></a-sphere>
+
+    <a-sphere position="4 1.1 5" radius="0.23" color="#ffffff"></a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       POND
+  ====================================================== -->
+
+  <a-cylinder
+    position="4 0.08 -4"
+    radius="3.2"
+    height="0.12"
+    color="#075985"
+    material="
+      transparent:true;
+      opacity:0.78;
+      metalness:0.5;
+      roughness:0.1;
+      emissive:#063d5c;
+      emissiveIntensity:0.8">
+  </a-cylinder>
+
+  <a-ring
+    position="4 0.15 -4"
+    rotation="-90 0 0"
+    radius-inner="3.1"
+    radius-outer="3.35"
+    color="#38bdf8"
+    material="emissive:#0284c7;emissiveIntensity:1">
+  </a-ring>
+
+
+  <!-- Water lilies -->
+
+  <a-circle
+    position="3 0.17 -4"
+    rotation="-90 0 0"
+    radius="0.55"
+    color="#4ade80">
+  </a-circle>
+
+  <a-sphere
+    position="3 0.25 -4"
+    radius="0.18"
+    color="#ff72d2"
+    material="emissive:#ff1493;emissiveIntensity:2">
+  </a-sphere>
+
+  <a-circle
+    position="5.5 0.17 -4.5"
+    rotation="-90 0 0"
+    radius="0.45"
+    color="#4ade80">
+  </a-circle>
+
+  <a-sphere
+    position="5.5 0.25 -4.5"
+    radius="0.16"
+    color="#ffe66d"
+    material="emissive:#ffd000;emissiveIntensity:2">
+  </a-sphere>
+
+
+  <!-- =====================================================
+       FIREFLIES
+  ====================================================== -->
+
+  <a-entity>
+
+    <a-sphere
+      position="-7 3 -3"
+      radius="0.055"
+      color="#ffff66"
+      material="emissive:#ffff00;emissiveIntensity:5"
+      animation="
+        property:position;
+        to:-5 4 -4;
+        dur:3200;
+        direction:alternate;
+        loop:true">
+    </a-sphere>
+
+    <a-sphere
+      position="-3 4 -7"
+      radius="0.05"
+      color="#baff70"
+      material="emissive:#aaff00;emissiveIntensity:5"
+      animation="
+        property:position;
+        to:-1 3 -6;
+        dur:2700;
+        direction:alternate;
+        loop:true">
+    </a-sphere>
+
+    <a-sphere
+      position="7 3 -5"
+      radius="0.06"
+      color="#ffff66"
+      material="emissive:#ffff00;emissiveIntensity:5"
+      animation="
+        property:position;
+        to:9 4 -4;
+        dur:3000;
+        direction:alternate;
+        loop:true">
+    </a-sphere>
+
+    <a-sphere
+      position="2 3 1"
+      radius="0.05"
+      color="#baff70"
+      material="emissive:#aaff00;emissiveIntensity:5"
+      animation="
+        property:position;
+        to:4 4 2;
+        dur:2400;
+        direction:alternate;
+        loop:true">
+    </a-sphere>
+
+    <a-sphere
+      position="-8 2 3"
+      radius="0.06"
+      color="#ffff66"
+      material="emissive:#ffff00;emissiveIntensity:5"
+      animation="
+        property:position;
+        to:-6 3 2;
+        dur:2900;
+        direction:alternate;
+        loop:true">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       BUTTERFLY 1
+  ====================================================== -->
+
+  <a-entity
+    position="-4 4 -3"
+    wing-flap
+    animation="
+      property:position;
+      to:4 4 -7;
+      dur:9000;
+      direction:alternate;
+      loop:true">
+
+    <a-sphere
+      class="leftWing"
+      position="-0.2 0 0"
+      scale="0.35 0.06 0.5"
+      color="#ff5bbd"
+      material="emissive:#ff1493;emissiveIntensity:1">
+    </a-sphere>
+
+    <a-sphere
+      class="rightWing"
+      position="0.2 0 0"
+      scale="0.35 0.06 0.5"
+      color="#a855f7"
+      material="emissive:#9333ea;emissiveIntensity:1">
+    </a-sphere>
+
+    <a-cylinder
+      position="0 0 0"
+      radius="0.04"
+      height="0.5"
+      color="#24120b">
+    </a-cylinder>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       BUTTERFLY 2
+  ====================================================== -->
+
+  <a-entity
+    position="7 4 -2"
+    wing-flap
+    animation="
+      property:position;
+      to:-2 3 -6;
+      dur:11000;
+      direction:alternate;
+      loop:true">
+
+    <a-sphere
+      class="leftWing"
+      position="-0.18 0 0"
+      scale="0.3 0.05 0.45"
+      color="#38bdf8">
+    </a-sphere>
+
+    <a-sphere
+      class="rightWing"
+      position="0.18 0 0"
+      scale="0.3 0.05 0.45"
+      color="#818cf8">
+    </a-sphere>
+
+    <a-cylinder
+      position="0 0 0"
+      radius="0.035"
+      height="0.45"
+      color="#24120b">
+    </a-cylinder>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       TREES
+  ====================================================== -->
+
+  <a-entity position="-13 0 -8">
+
+    <a-cylinder
+      position="0 2 0"
+      radius="0.5"
+      height="4"
+      color="#49301f">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 4.5 0"
+      radius="2.5"
+      color="#123d2b">
+    </a-sphere>
+
+    <a-sphere
+      position="-1.5 4.2 0"
+      radius="1.5"
+      color="#174f34">
+    </a-sphere>
+
+    <a-sphere
+      position="1.5 4.3 0"
+      radius="1.6"
+      color="#155c38">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <a-entity position="13 0 -9">
+
+    <a-cylinder
+      position="0 2 0"
+      radius="0.55"
+      height="4"
+      color="#49301f">
+    </a-cylinder>
+
+    <a-sphere
+      position="0 4.5 0"
+      radius="2.6"
+      color="#103b29">
+    </a-sphere>
+
+    <a-sphere
+      position="-1.5 4.2 0"
+      radius="1.5"
+      color="#185335">
+    </a-sphere>
+
+    <a-sphere
+      position="1.5 4.3 0"
+      radius="1.6"
+      color="#155c38">
+    </a-sphere>
+
+  </a-entity>
+
+
+  <!-- =====================================================
+       CAMERA
+  ====================================================== -->
+
+  <a-entity
+    position="0 2 8">
+
+    <a-camera
+      wasd-controls="acceleration:25"
+      look-controls="enabled:true">
+    </a-camera>
+
+  </a-entity>
+
+
+</a-scene>
+
+</body>
+</html>
